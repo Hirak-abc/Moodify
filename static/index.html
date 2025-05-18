@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Moodify</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg-dark: #121212;
+      --card-dark: #1E1E1E;
+      --text-dark: #FFFFFF;
+      --border-dark: #333333;
+      --bg-light: #f3f3f3;
+      --card-light: #ffffff;
+      --text-light: #121212;
+      --border-light: #dddddd;
+      --spotify-green: #1DB954;
+    }
+
+    body {
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .dark-mode {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    .light-mode {
+      background-color: var(--bg-light);
+      color: var(--text-light);
+    }
+
+    .card {
+      transition: background-color 0.3s ease;
+    }
+
+    .dark-mode .card {
+      background-color: var(--card-dark);
+      border: 1px solid var(--border-dark);
+      color: var(--text-dark);
+    }
+
+    .light-mode .card {
+      background-color: var(--card-light);
+      border: 1px solid var(--border-light);
+      color: var(--text-light);
+    }
+
+    .spotify-green {
+      background-color: var(--spotify-green);
+      color: #000000;
+    }
+
+    .spotify-green:hover {
+      background-color: #1ed760;
+    }
+
+    .toggle-switch {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
+
+    /* ANIMATION STYLES */
+    .container {
+      position: relative;
+      width: 240px;
+      height: 300px;
+      animation: grooveScale 1.8s infinite ease-in-out;
+      margin: 0 auto; /* Center the container */
+    }
+
+    .head {
+      width: 150px;
+      height: 150px;
+      background: #222;
+      border-radius: 50%;
+      position: absolute;
+      top: 60px;
+      left: 50%; /* Center horizontally */
+      transform: translateX(-50%); /* Ensure exact centering */
+      animation: bounce 2s infinite ease-in-out;
+    }
+
+    .ear {
+      width: 25px;
+      height: 50px;
+      background: #1DB954;
+      border-radius: 12px;
+      position: absolute;
+      top: 100px;
+    }
+
+    .ear.left {
+      left: 230px; /* Adjusted position closer to head */
+    }
+
+    .ear.right {
+      right: 230px; /* Adjusted position closer to head */
+    }
+
+    /* Heartbeat animation near ears */
+    .heartbeat {
+      position: absolute;
+      top: 110px;
+      width: 15px;
+      height: 15px;
+      background: transparent;
+      border: 2px solid #1DB954;
+      border-radius: 50%;
+      animation: heartbeat 1.5s infinite ease-in-out;
+    }
+
+    .heartbeat.left {
+      left: 220px; /* Moved closer to head */
+    }
+
+    .heartbeat.right {
+      right: 220px; /* Moved closer to head */
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.3); opacity: 1; }
+    }
+
+    .headphones {
+      width: 160px;
+      height: 160px;
+      border: 6px solid #1DB954;
+      border-top: none;
+      border-radius: 80px 80px 0 0;
+      position: absolute;
+      top: 50px;
+      left: 50%; /* Center horizontally */
+      transform: translateX(-50%); /* Ensure exact centering */
+    }
+
+    .wave {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+    }
+
+    .bar {
+      width: 8px;
+      height: 25px;
+      background-color: #1DB954;
+      animation: sound 1s infinite ease-in-out;
+    }
+
+    .bar:nth-child(2) { animation-delay: 0.2s; }
+    .bar:nth-child(3) { animation-delay: 0.4s; }
+    .bar:nth-child(4) { animation-delay: 0.6s; }
+    .bar:nth-child(5) { animation-delay: 0.8s; }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0) translateX(-50%); }
+      50% { transform: translateY(6px) translateX(-50%); }
+    }
+
+    @keyframes sound {
+      0%, 100% { height: 25px; }
+      50% { height: 40px; }
+    }
+
+    @keyframes grooveScale {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+
+    .soundwave {
+      position: absolute;
+      top: 105px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .soundwave.left {
+      left: 200px; /* Adjusted position */
+      align-items: flex-end;
+    }
+
+    .soundwave.right {
+      right: 200px; /* Adjusted position */
+      align-items: flex-start;
+    }
+
+    .wave-line {
+      width: 20px;
+      height: 4px;
+      background: #1DB954;
+      border-radius: 2px;
+      animation: waveMove 1.2s infinite ease-in-out;
+    }
+
+    .soundwave.left .wave-line {
+      animation-name: waveMoveLeft;
+    }
+
+    .soundwave.right .wave-line {
+      animation-name: waveMoveRight;
+    }
+
+    .wave-line:nth-child(2) {
+      width: 14px;
+      animation-delay: 0.2s;
+    }
+
+    .wave-line:nth-child(3) {
+      width: 8px;
+      animation-delay: 0.4s;
+    }
+
+    @keyframes waveMoveLeft {
+      0%, 100% { transform: translateX(0); opacity: 1; }
+      50% { transform: translateX(7px); opacity: 0.6; }
+    }
+
+    @keyframes waveMoveRight {
+      0%, 100% { transform: translateX(0); opacity: 1; }
+      50% { transform: translateX(-7px); opacity: 0.6; }
+    }
+  </style>
+</head>
+<body class="dark-mode min-h-screen flex flex-col items-center justify-center px-4 py-10" id="pageBody">
+  <div class="toggle-switch">
+    <label class="flex items-center cursor-pointer">
+      <span class="mr-2 text-sm font-medium">Light Mode</span>
+      <input type="checkbox" id="themeToggle" class="sr-only peer" />
+      <div class="w-11 h-6 bg-gray-300 rounded-full peer peer-checked:bg-[#1DB954] relative">
+        <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition peer-checked:translate-x-full"></div>
+      </div>
+    </label>
+  </div>
+
+  <div class="max-w-2xl w-full text-center mt-10">
+    <h1 class="text-4xl font-bold text-[#1DB954] mb-6">Moodify-Tunes Tailored To Your Vibes</h1>
+
+    <!-- HEAD ANIMATION -->
+    <div class="flex justify-center my-4">
+      <div class="container">
+        <div class="headphones"></div>
+        <div class="ear left"></div>
+        <div class="ear right"></div>
+        <div class="head"></div>
+        <div class="heartbeat left"></div>
+        <div class="heartbeat right"></div>
+        <div class="soundwave left">
+          <div class="wave-line"></div>
+          <div class="wave-line"></div>
+          <div class="wave-line"></div>
+        </div>
+        <div class="soundwave right">
+          <div class="wave-line"></div>
+          <div class="wave-line"></div>
+          <div class="wave-line"></div>
+        </div>
+        <div class="wave">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM BELOW ANIMATION -->
+    <form id="moodForm" class="mb-8 flex flex-col sm:flex-row gap-4 items-center justify-center">
+      <select id="moodDropdown" name="mood" required
+        class="px-4 py-2 w-full sm:w-auto rounded-lg border border-gray-600 bg-black text-white focus:outline-none focus:ring-2 focus:ring-[#1DB954] dark-mode">
+        <option value="">Select Mood</option>
+        <option value="Happy">Happy</option>
+        <option value="Sad">Sad</option>
+        <option value="Energetic">Energetic</option>
+        <option value="Relaxed">Relaxed</option>
+        <option value="Romantic">Romantic</option>
+        <option value="Angry">Angry</option>
+        <option value="Melancholy">Melancholy</option>
+        <option value="Motivated">Motivated</option>
+        <option value="Thoughtful">Thoughtful</option>
+        <option value="Calm">Calm</option>
+        <option value="Nostalgic">Nostalgic</option>
+        <option value="Excited">Excited</option>
+        <option value="Peaceful">Peaceful</option>
+        <option value="Confident">Confident</option>
+        <option value="Lonely">Lonely</option>
+        <option value="Hopeful">Hopeful</option>
+        <option value="Playful">Playful</option>
+        <option value="Dreamy">Dreamy</option>
+        <option value="Anxious">Anxious</option>
+        <option value="Bold">Bold</option>
+      </select>
+      <button type="submit" class="spotify-green font-semibold px-6 py-2 rounded-lg transition shadow-md">
+        Get Songs
+      </button>
+    </form>
+
+    <h2 id="resultTitle" class="text-2xl font-semibold mb-4"></h2>
+    <div id="songsContainer" class="space-y-6"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('moodForm');
+    const songsContainer = document.getElementById('songsContainer');
+    const resultTitle = document.getElementById('resultTitle');
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.getElementById('pageBody');
+    const moodDropdown = document.getElementById('moodDropdown');
+
+    themeToggle.addEventListener('change', () => {
+      body.classList.toggle('light-mode');
+      body.classList.toggle('dark-mode');
+
+      const isLight = body.classList.contains('light-mode');
+      moodDropdown.classList.toggle('bg-black', !isLight);
+      moodDropdown.classList.toggle('text-white', !isLight);
+      moodDropdown.classList.toggle('bg-white', isLight);
+      moodDropdown.classList.toggle('text-black', isLight);
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      songsContainer.innerHTML = '';
+      resultTitle.textContent = '';
+
+      const mood = moodDropdown.value.trim();
+      if (!mood) return alert("Please select a mood!");
+
+      try {
+        const response = await fetch('/songs', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({ mood })
+        });
+        const data = await response.json();
+
+        if (data.error) {
+          resultTitle.textContent = data.error;
+          return;
+        }
+
+        resultTitle.textContent = `Songs for mood "${data.mood}" (Genre: ${data.genre}):`;
+
+        data.songs.forEach(song => {
+          const div = document.createElement('div');
+          div.className = 'card p-4 rounded-lg shadow-md text-left';
+          div.innerHTML = `
+            <strong class="text-lg">${song.name}</strong><br/>
+            <span class="text-gray-400">Artist: ${song.artist}</span><br/>
+            <span class="text-gray-400">Album: ${song.album}</span><br/>
+            ${song.spotify_url
+              ? `<iframe src="https://open.spotify.com/embed/track/${song.spotify_url.split('/track/')[1]}"
+                        width="100%" height="80" frameborder="0" allowtransparency="true"
+                        allow="encrypted-media" class="mt-3 rounded-md"></iframe>`
+              : '<em class="text-gray-500">No preview available</em>'}
+          `;
+          songsContainer.appendChild(div);
+        });
+
+      } catch (error) {
+        resultTitle.textContent = 'Error fetching songs. Try again later.';
+        console.error(error);
+      }
+    });
+  </script>
+
+</body>
+</html>
