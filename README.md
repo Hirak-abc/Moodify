@@ -1,7 +1,7 @@
 <h1 align="center">🎧 Moodify – Music Based on Your Mood</h1>
 
 <p align="center">
-  <img src="https://github.com/Hirak-abc/Moodify/blob/master/new_vid.gif?raw=true" width="1000" alt="Music Boy Animation"/>
+  <img src="https://github.com/Hirak-abc/Moodify/blob/master/gif.gif?raw=true" width="1000" alt="Music Boy Animation"/>
 </p>
 
 <p align="center">
