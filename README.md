@@ -1,7 +1,7 @@
 <h1 align="center">🎧 Moodify – Music Based on Your Mood</h1>
 
 <p align="center">
-  <img src="https://github.com/Hirak-abc/Moodify/blob/master/new_vid.gif?raw=true" width="700" alt="Music Boy Animation"/>
+  <img src="https://github.com/Hirak-abc/Moodify/blob/master/new_vid.gif?raw=true" width="1000" alt="Music Boy Animation"/>
 </p>
 
 <p align="center">
@@ -15,7 +15,6 @@
 ## 🌟 Features
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Mood-Based%20Music-🎭-blue" />
   <img src="https://img.shields.io/badge/Spotify%20Integration-🎵-green" />
   <img src="https://img.shields.io/badge/30s%20Preview-⏱️-yellow" />
   <img src="https://img.shields.io/badge/Responsive%20UI-💻-orange" />
